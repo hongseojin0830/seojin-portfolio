@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Hong Seojin | Web Publisher Portfolio</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/aos@2.3.4/dist/aos.css">
+
+  <style>
+    :root{
+      --main-color:#172B4D;
+      --sub1-color:#5277A5;
+      --sub2-color:#304E73;
+      --bg-color:#F6F8FB;
+      --grid-color:#DEE5ED;
+      --white:#fff;
+      --text:#172B4D;
+      --muted:#6D7888;
+      --line:#D9E1EA;
+    }
+
+    *{margin:0;padding:0;box-sizing:border-box;word-break:keep-all}
+    html{scroll-behavior:smooth}
+    body{
+      font-family:"Pretendard","Noto Sans KR",Arial,sans-serif;
+      color:var(--text);
+      background-color:var(--bg-color);
+      background-image:
+        linear-gradient(rgba(82,119,165,.08) 1px,transparent 1px),
+        linear-gradient(90deg,rgba(82,119,165,.08) 1px,transparent 1px);
+      background-size:20px 20px;
+      overflow-x:hidden;
+    }
+    a{text-decoration:none;color:inherit}
+    ul{list-style:none}
+    img{display:block;max-width:100%}
+
+    /* HEADER */
+    header{
+      position:fixed;
+      top:25px;
+      left:50%;
+      transform:translateX(-50%);
+      width:calc(100% - 15vw);
+      max-width:1380px;
+      height:60px;
+      z-index:1000;
+      display:grid;
+      grid-template-columns:1fr auto 1fr;
+      align-items:center;
+      padding:0 35px;
+      background:var(--main-color);
+      border-radius:40px;
+      box-shadow:0 8px 25px rgba(23,43,77,.12);
+    }
+    .logo,.header-code{color:#fff;font-size:20px;font-weight:700;letter-spacing:-1px}
+    .logo{justify-self:start}
+    .header-code{justify-self:end}
+    nav{justify-self:center}
+    nav ul{display:flex;align-items:center;gap:38px}
+    nav a{
+      position:relative;
+      color:#fff;
+      font-size:14px;
+      font-weight:500;
+      transition:.25s ease;
+    }
+    nav a:after{
+      content:"";
+      position:absolute;
+      left:0;
+      bottom:-5px;
+      width:0;
+      height:2px;
+      background:#6D9BC7;
+      transition:.25s ease;
+    }
+    nav a:hover{color:#6D9BC7}
+    nav a:hover:after{width:100%}
+
+    /* COMMON */
+    section{min-height:100vh;padding:150px 7vw 110px;position:relative}
+    .section-title{
+      display:inline-block;
+      font-size:clamp(3rem,6vw,5.8rem);
+      line-height:.95;
+      letter-spacing:-5px;
+      margin-bottom:35px;
+      background:linear-gradient(90deg,#6D9BC7 0%,#5277A5 45%,#172B4D 100%) text;
+      -webkit-text-fill-color:transparent;
+    }
+    .section-sub{font-size:15px;color:var(--muted);margin-top:-20px;margin-bottom:60px}
+    .eyebrow{
+      display:inline-flex;
+      padding:7px 12px;
+      border:1px solid #C9D5E2;
+      border-radius:30px;
+      font-size:11px;
+      letter-spacing:1px;
+      color:var(--sub2-color);
+      background:rgba(255,255,255,.65);
+    }
+
+    /* CENTER ALIGN */
+    section > .section-title,
+    section > .section-sub{
+      display:block;
+      max-width:1280px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    .skills-simple,
+    .career-wrap{
+      margin-left:auto;
+      margin-right:auto;
+    }
+
+    /* HOME */
+    #home{
+      min-height:100vh;
+      padding:0;
+      display:flex;
+      align-items:center;
+      overflow:hidden;
+    }
+    .home-inner{width:calc(100% - 14vw);max-width:1380px;margin:0 auto;padding:150px 0 90px;position:relative}
+    .home-copy{position:relative;z-index:3;max-width:850px}
+    .home-title{
+      margin-top:25px;
+      font-size:clamp(3.2rem,7vw,7.8rem);
+      font-weight:800;
+      line-height:.98;
+      letter-spacing:-7px;
+      background:linear-gradient(90deg,#6D9BC7 0%,#5277A5 45%,#172B4D 100%) text;
+      -webkit-text-fill-color:transparent;
+    }
+    .home-desc{
+      max-width:650px;
+      margin-top:30px;
+      font-size:17px;
+      line-height:1.9;
+      color:#526071;
+    }
+    .home-meta{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
+    .home-meta span{
+      padding:9px 13px;
+      border-radius:30px;
+      background:#fff;
+      border:1px solid var(--line);
+      font-size:12px;
+      color:#4E5C6D;
+    }
+
+    .name-marquee{
+      position:absolute;
+      left:-2%;
+      bottom:9%;
+      width:104%;
+      overflow:hidden;
+      z-index:1;
+      pointer-events:none;
+    }
+    .marquee-track{
+      display:flex;
+      width:max-content;
+      animation:marquee 22s linear infinite;
+    }
+    .marquee-track span{
+      flex-shrink:0;
+      margin-right:80px;
+      color:rgba(23,43,77,.055);
+      font-size:clamp(6rem,13vw,12rem);
+      font-weight:800;
+      line-height:.8;
+      letter-spacing:-8px;
+      white-space:nowrap;
+    }
+    @keyframes marquee{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+    .profile-orbit{
+      position:absolute;
+      right:5vw;
+      top:50%;
+      transform:translateY(-40%);
+      width:min(34vw,470px);
+      aspect-ratio:1;
+      border-radius:50%;
+      background:linear-gradient(145deg,#DDE9F4,#91B1CF);
+      z-index:2;
+      box-shadow:0 30px 80px rgba(47,79,115,.18);
+    }
+    .profile-orbit:before{
+      content:"";
+      position:absolute;
+      inset:8%;
+      border:1px solid rgba(255,255,255,.8);
+      border-radius:50%;
+    }
+    .profile-photo{
+      position:absolute;
+      right:0%;
+      bottom:0;
+      width:100%;
+      height:100%;
+      object-fit:contain;
+      object-position:bottom center;
+      filter:drop-shadow(0 25px 25px rgba(23,43,77,.14));
+    }
+
+    /* ABOUT */
+    #about > .section-title,
+    #about > .section-sub,
+    #project > .section-title,
+    #project > .section-sub{
+      display:block;
+      max-width:1150px;
+      margin-left:auto;
+      margin-right:auto;
+    }
+    .about-grid{
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:70px;
+      max-width:1150px;
+      margin:0 auto;
+    }
+    .about-text{font-size:18px;line-height:1.95;color:#4F5D6D}
+    .about-text strong{font-size:clamp(24px,3vw,38px);line-height:1.35;color:var(--main-color)}
+    .about-text p{margin-top:28px}
+    .skill-title{font-size:18px;margin-bottom:5px}
+    .company-info{margin-bottom:35px}
+    .company-name{font-size:25px;font-weight:700;letter-spacing:-1px;margin-top:8px}
+    .company-period{font-size:13px;color:#738094;margin-top:7px}
+    .company-duty{margin-top:20px;padding-left:15px;border-left:2px solid #D9E1EA;font-size:13px;line-height:1.8;color:#526071}
+    .company-duty p{margin:0}
+    .skill-list{display:flex;flex-wrap:wrap;gap:10px;margin-top:25px}
+
+    .about-approach{
+      margin-top:55px;
+      padding-top:25px;
+      border-top:1px solid var(--line);
+    }
+    .approach-title{font-size:16px;font-weight:700;letter-spacing:.5px;margin-bottom:22px}
+    .approach-list{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .approach-item{padding-right:15px}
+    .approach-number{display:block;font-size:11px;color:#6D9BC7;letter-spacing:1px;margin-bottom:10px}
+    .approach-item h4{font-size:15px;letter-spacing:.5px;margin-bottom:8px}
+    .approach-item p{font-size:12px;line-height:1.75;color:#667487}
+
+    .skill-list span{
+      padding:10px 15px;
+      border:1px solid #CBD7E3;
+      border-radius:30px;
+      background:rgba(255,255,255,.65);
+      font-size:13px;
+      color:#425267;
+    }
+
+    /* ABOUT CAREER */
+    .about-career{margin-top:85px;max-width:1150px;margin-left:auto;margin-right:auto}
+    .about-block-title{display:flex;align-items:center;gap:15px;margin-bottom:22px}
+    .about-block-title h3{font-size:20px;letter-spacing:-.5px}
+    .about-block-title span{font-size:12px;color:#E05A5A}
+    .company-card{display:grid;grid-template-columns:180px 1fr;gap:35px;padding:30px 35px;background:#fff;border:1px solid #D9E1EA}
+    .company-period{font-size:13px;color:#5277A5;line-height:1.7}
+    .company-period strong{display:block;color:#172B4D;font-size:14px;margin-bottom:4px}
+    .company-name{font-size:22px;font-weight:700;letter-spacing:-1px}
+    .company-role{margin-top:5px;font-size:13px;color:#6D7888}
+    .company-desc{margin-top:17px;padding-left:15px;border-left:2px solid #D9E1EA;font-size:13px;line-height:1.85;color:#526071}
+    .company-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:17px}
+    .company-tags span{padding:6px 10px;border:1px solid #D4DEE8;border-radius:20px;font-size:10px;color:#586678;background:#F9FBFD}
+    .about-projects{margin-top:55px}
+    .project-table{width:100%;border-top:1px solid #172B4D;border-collapse:collapse;background:rgba(255,255,255,.65)}
+    .project-table th,.project-table td{padding:16px 18px;border-bottom:1px dotted #BFCAD6;font-size:12px;vertical-align:middle;text-align:center}
+    .project-table th{background:rgba(255,255,255,.55);font-weight:600;color:#4D5C6E}
+    .project-table td:first-child{text-align:left;font-weight:600;color:#172B4D}
+    .project-table td:nth-child(2){white-space:nowrap;color:#5277A5}
+    .project-table td:last-child{text-align:left;line-height:1.65;color:#5C6877}
+    .project-table .project-role{white-space:nowrap;color:#526071}
+
+
+    .about-intro-link{
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 35px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid #172B4D;
+    font-size: 13px;
+    color: #ffffff;
+    transition: .25s ease;
+    border-radius: 20px;
+    background: #172b4d;
+    padding: 10px;
+    }
+    .about-intro-link span{
+      font-size:17px;
+      transition:.25s ease;
+    }
+    .about-intro-link:hover{
+      color:#5277A5;
+      border-color:#5277A5;
+    }
+    .about-intro-link:hover span{
+      transform:translate(4px,-4px);
+    }
+
+    /* SKILLS */
+    #work{background:rgba(255,255,255,.28)}
+    .skills-simple{max-width:1100px;border-top:1px solid var(--line)}
+    .skill-row{
+      display:grid;
+      grid-template-columns:100px 1fr;
+      gap:35px;
+      padding:38px 0;
+      border-bottom:1px solid var(--line);
+    }
+    .skill-number{font-size:12px;color:#7A8797;letter-spacing:1px}
+    .skill-row h3{font-size:28px;letter-spacing:-1px}
+    .skill-row p{
+      max-width:700px;
+      margin-top:10px;
+      font-size:14px;
+      line-height:1.8;
+      color:#667487;
+    }
+
+    /* CAREER */
+    #career{background:rgba(255,255,255,.65)}
+    .career-wrap{max-width:1280px}
+    .career-item{
+      display:grid;
+      grid-template-columns:200px 180px 1fr;
+      gap:35px;
+      padding:45px 0;
+      border-top:1px solid var(--line);
+    }
+    .career-item:last-child{border-bottom:1px solid var(--line)}
+    .career-period{font-size:13px;color:#738094;line-height:1.7}
+    .career-company{font-size:28px;font-weight:750;letter-spacing:-1px;line-height:1.25}
+    .career-type{margin-top:8px;font-size:12px;color:#7C8795}
+    .career-desc{font-size:15px;line-height:1.9;color:#4B5969}
+    .career-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:20px}
+    .career-tags span{
+      padding:7px 11px;
+      border:1px solid #D4DEE8;
+      background:#fff;
+      border-radius:20px;
+      font-size:11px;
+      color:#586678;
+    }
+    .career-site-link{
+      display:inline-flex;
+      margin:18px 0 0 4px;
+      padding-bottom:4px;
+      border-bottom:1px solid var(--main-color);
+      font-size:11px;
+      font-weight:700;
+    }
+    .career-highlight{
+      display:inline-block;
+      margin-bottom:13px;
+      padding:6px 10px;
+      background:var(--main-color);
+      color:#fff;
+      font-size:10px;
+      border-radius:20px;
+    }
+
+    /* PROJECT */
+    .project-list{
+      display:grid;
+      grid-template-columns:repeat(2,1fr);
+      gap:24px;
+      max-width:1150px;
+      margin:0 auto;
+    }
+    .project-card{
+      min-height:390px;
+      padding:34px;
+      position:relative;
+      overflow:hidden;
+      border-radius:28px;
+      border:1px solid #D8E2EC;
+      background:rgba(255,255,255,.72);
+      transition:.35s ease;
+    }
+    .project-card::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background-image:var(--project-bg);
+      background-size:cover;
+      background-position:center;
+      background-repeat:no-repeat;
+      opacity:.14;
+      filter:blur(1px);
+      transform:scale(1.03);
+      pointer-events:none;
+    }
+    .project-card > *{
+      position:relative;
+      z-index:2;
+    }
+    .project-card:nth-child(1){
+      --project-bg:url("./images/project01.jpg");
+    }
+    .project-card:nth-child(2){
+      --project-bg:url("./img/project02.png");
+    }
+    .project-card:nth-child(3){
+      --project-bg:url("/img/project03.png");
+    }
+    .project-card:nth-child(4){
+      --project-bg:url("./images/project04.jpg");
+    }
+    .project-card:hover{
+      transform:translateY(-7px);
+      box-shadow:0 25px 60px rgba(23,43,77,.1);
+    }
+    .project-card .label{font-size:11px;letter-spacing:1px;color:#748196}
+    .project-card h3{font-size:32px;margin-top:120px;letter-spacing:-1.5px}
+    .project-card p{margin-top:14px;line-height:1.75;color:#667487}
+    .project-tags{display:flex;flex-wrap:wrap;gap:7px;margin-top:22px}
+    .project-tags span{font-size:10px;padding:6px 9px;border-radius:20px;background:#EDF3F8;color:#51657B}
+    .project-card .view{
+      position:absolute;
+      right:30px;
+      bottom:28px;
+      font-size:11px;
+      letter-spacing:1.5px;
+      font-weight:700;
+    }
+    .project-card.featured{
+      background:linear-gradient(145deg,#EFF5FA,#D8E5F1);
+    }
+    .project-card.featured:before{
+      content:"";
+      position:absolute;
+      width:230px;height:230px;
+      right:-60px;top:-70px;
+      border-radius:50%;
+      background:#B8CEE1;
+      opacity:.6;
+    }
+
+    /* CONTACT */
+    #contact{
+      min-height:75vh;
+      background:var(--main-color);
+      color:#fff;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      text-align:center;
+    }
+    #contact .section-title{
+      background:linear-gradient(90deg,#A9C6DF,#fff) text;
+      -webkit-text-fill-color:transparent;
+    }
+    #contact .section-sub{color:#B8C5D3}
+    .contact-mail{font-size:clamp(30px,5vw,70px);font-weight:700;word-break:break-all}
+    .contact-info{margin-top:35px;line-height:2;color:#AEBBC9}
+
+    @media(max-width:1024px){
+      header{width:calc(100% - 50px)}
+      nav ul{gap:22px}
+      section{padding:125px 5vw 90px}
+      .profile-orbit{right:-7vw;width:42vw}
+      .about-grid{gap:45px}
+      .career-item{grid-template-columns:160px 140px 1fr;gap:25px}
+    }
+
+    @media(max-width:767px){
+      header{
+        top:15px;
+        width:calc(100% - 30px);
+        height:50px;
+        padding:0 15px;
+      }
+      .logo,.header-code{font-size:13px}
+      nav ul{gap:12px}
+      nav a{font-size:9px}
+      section{padding:105px 20px 75px}
+      .section-title{font-size:3.3rem;letter-spacing:-4px;margin-bottom:32px}
+      .section-sub{font-size:13px;margin-bottom:40px}
+      #home{min-height:100svh}
+      .home-inner{padding:105px 20px 70px}
+      .home-copy{max-width:100%}
+      .home-title{font-size:clamp(3rem,13vw,4.7rem);letter-spacing:-4px}
+      .home-desc{font-size:14px;line-height:1.8}
+      .profile-orbit{right:-20vw;top:64%;width:70vw;opacity:.8}
+      .name-marquee{bottom:16%}
+      .marquee-track span{font-size:5.2rem;letter-spacing:-4px;margin-right:45px}
+      .about-grid{grid-template-columns:1fr;gap:45px;margin-left:0;margin-right:0}
+      .about-career{margin-top:60px;margin-left:0;margin-right:0}
+      .company-card{grid-template-columns:1fr;gap:18px;padding:25px 20px}
+      .company-name{font-size:19px}
+      .company-desc{font-size:12px}
+      .project-table{display:block;overflow-x:auto;white-space:normal}
+      .project-table th,.project-table td{min-width:120px;padding:13px 12px;font-size:11px}
+      .project-table th:first-child,.project-table td:first-child{min-width:145px}
+      .project-table th:last-child,.project-table td:last-child{min-width:230px}
+
+      .about-text{font-size:16px}
+      .about-intro-link{
+        margin-top:45px;
+      }
+
+      .about-text strong{font-size:24px}
+
+      .approach-list{grid-template-columns:1fr;gap:18px}
+      .about-approach{margin-top:40px}
+      .approach-item{padding-right:0}
+      .skill-row{grid-template-columns:45px 1fr;gap:12px;padding:30px 0}
+      .skill-row h3{font-size:23px}
+      .skill-row p{font-size:13px}
+      .career-item{grid-template-columns:1fr;gap:7px;padding:38px 0}
+      .career-company{font-size:27px;margin-top:4px}
+      .career-content{margin-top:18px}
+      .career-desc{font-size:14px}
+      .project-list{grid-template-columns:1fr;margin-left:0;margin-right:0}
+      .project-card{min-height:330px;padding:25px;border-radius:22px}
+      .project-card h3{margin-top:90px;font-size:27px}
+      .swiper-button-next,.swiper-button-prev{display:none}
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <a href="#home" class="logo">&lt;HSJ&gt;</a>
+    <nav>
+      <ul>
+        <li><a href="#about">ABOUT ME</a></li>
+        <li><a href="#work">SKILLS</a></li>
+        <li><a href="#project">PROJECTS</a></li>
+      </ul>
+    </nav>
+    <a href="#contact" class="header-code">&lt;/HSJ&gt;</a>
+  </header>
+
+  <main>
+    <section id="home">
+      <div class="home-inner">
+        <div class="home-copy" data-aos="fade-up" data-aos-duration="900">
+          <span class="eyebrow">WEB PUBLISHER · HONG SEOJIN</span>
+          <h1 class="home-title">4년차 웹퍼블리셔<br>홍서진입니다.</h1>
+          <p class="home-desc">
+            div 태그가 여러 콘텐츠를 하나로 감싸듯,<br>
+            웹사이트의 흐름과 구조를 정리하고 자연스러운 인터랙션을 더합니다.
+          </p>
+          <div class="home-meta">
+            <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+            <span>Responsive Web</span><span>UI Interaction</span>
+          </div>
+        </div>
+
+        <div class="profile-orbit">
+          <img class="profile-photo" src="./img/seojin.png" alt="홍서진 프로필">
+        </div>
+
+        <div class="name-marquee">
+          <div class="marquee-track">
+            <span>HONG SEOJIN</span><span>HONG SEOJIN</span><span>HONG SEOJIN</span>
+            <span>HONG SEOJIN</span><span>HONG SEOJIN</span><span>HONG SEOJIN</span>
+            <span>HONG SEOJIN</span><span>HONG SEOJIN</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="about">
+      <h2 class="section-title" data-aos="fade-up">ABOUT ME</h2>
+      <p class="section-sub" data-aos="fade-up" data-aos-delay="100">Markup · Responsive · Interaction</p>
+
+      <div class="about-grid">
+        <div class="about-text" data-aos="fade-right">
+          <strong>깔끔한 구조와 자연스러운<br>인터랙션을구현하는 웹 퍼블리셔</strong>
+          <p>
+            HTML, CSS, JavaScript를 기반으로 웹 페이지를 제작하고
+            반응형 레이아웃과 다양한 UI 인터랙션을 구현합니다.
+            다양한 브랜드의 이벤트와 모바일 웹을 제작하며 쌓은 경험을 바탕으로
+            콘텐츠의 흐름을 이해하고 사용자가 보기 편한 화면을 만드는 것을 중요하게 생각합니다.
+          </p>
+
+          <div class="about-approach" data-aos="fade-up" data-aos-delay="150">
+            <h3 class="approach-title">MY APPROACH</h3>
+            <div class="approach-list">
+              <div class="approach-item">
+                <span class="approach-number">01</span>
+                <h4>STRUCTURE</h4>
+                <p>콘텐츠의 흐름을 이해하고 보기 편한 구조로 정리합니다.</p>
+              </div>
+              <div class="approach-item">
+                <span class="approach-number">02</span>
+                <h4>RESPONSIVE</h4>
+                <p>PC부터 Mobile까지 자연스럽게 이어지는 화면을 구현합니다.</p>
+              </div>
+              <div class="approach-item">
+                <span class="approach-number">03</span>
+                <h4>INTERACTION</h4>
+                <p>콘텐츠에 맞는 자연스러운 인터랙션을 더해 화면의 완성도를 높입니다.</p>
+              </div>
+            </div>
+          </div>
+          <a href="https://app.notion.com/p/SEOJIN-S-Portfolio-ea4eaa178a3b82ed8632016cdca5073b?source=copy_link" class="about-intro-link">자기소개서 보기 <span>↗</span></a>
+        </div>
+
+        <div data-aos="fade-left">
+          <div class="company-info">
+            <h3 class="skill-title">COMPANY</h3>
+            <p class="company-name">㈜아이뱅크 [디지털웍스]</p>
+            <p class="company-period">2022.04 ~ 2026.01 · 총 3년 10개월</p>
+            <div class="company-duty">
+              <p>- 웹/모바일 페이지 퍼블리싱 및 운영</p>
+              <p>- HTML, CSS, JavaScript, jQuery를 활용한 페이지 제작 및 수정</p>
+              <p>- 이벤트·프로모션 페이지 제작 및 반응형 UI 작업</p>
+              <p>- Swiper, AOS 등을 활용한 인터랙션 구현</p>
+              <p>- 웹 표준 및 웹 접근성을 고려한 마크업</p>
+              <p>- 운영 페이지 유지보수 및 QA, 오류 수정</p>
+              <p>- Figma, Photoshop을 활용한 디자인 시안 확인 및 간단한 디자인 수정</p>
+              <p>- 기획·디자인·개발 담당자와 협업하여 페이지 제작</p>
+            </div>
+          </div>
+
+          <h3 class="skill-title">SKILLS</h3>
+          <div class="skill-list">
+            <span>HTML5</span><span>CSS3</span><span>JavaScript</span>
+            <span>jQuery</span><span>Responsive Web</span><span>Swiper</span>
+            <span>AOS</span><span>Vue.js</span><span>Git</span>
+            <span>Figma</span><span>Photoshop</span><span>Illustrator</span>
+          </div>
+
+          <h3 class="skill-title" style="margin-top:30px;">CERTIFICATE</h3>
+          <div class="skill-list">
+            <span>GTQ 1급</span><span>운전면허증 2종 보통</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="career">
+      <h2 class="section-title" data-aos="fade-up">CAREER</h2>
+      <p class="section-sub" data-aos="fade-up" data-aos-delay="100">Web Publishing Experience</p>
+
+      <div class="career-wrap">
+        <article class="career-item" data-aos="fade-up">
+          <div class="career-period">2022.04 ~ 2022.05</div>
+          <div><h3 class="career-company">에뛰드</h3><p class="career-type">웹퍼블리싱</p></div>
+          <div class="career-content">
+            <span class="career-highlight">에뛰드</span>
+            <p class="career-desc">에뛰드의 매달 1일 정기 기획전, 단독 행사, 멤버십데이 등 주요 프로모션에 맞춘 딜 페이지 제작을 담당하였습니다. 기획전 일정에 맞추어 프로모션 페이지를 안정적으로 구축하고, 관련 콘텐츠를 신속하게 반영하여 원활한 이벤트 운영을 지원하였습니다.</p>
+            <a class="career-site-link" href="https://www.etude.com/" target="_blank" rel="noopener">VIEW SITE ↗</a>
+            <div class="career-tags"><span>Promotion Page</span><span>Deal Page</span><span>Web Publishing</span></div>
+          </div>
+        </article>
+
+        <article class="career-item" data-aos="fade-up">
+          <div class="career-period">2022.05 ~ 2022.09</div>
+          <div><h3 class="career-company">나이키</h3><p class="career-type">웹퍼블리싱</p></div>
+          <div class="career-content">
+            <span class="career-highlight">Nike</span>
+            <p class="career-desc">나이키의 메인페이지 CDP, 사이즈 가이드, FITTIP, PWH, 저널, 멤버 데이즈 등의 다양한 이벤트 페이지를 웹 퍼블리싱하며, 디자인팀과 기획팀과 협업하여 요구 사항을 반영하고, 커뮤니케이션을 통해 페이지 성능과 사용자 경험을 최적화하였습니다.</p>
+            <a class="career-site-link" href="https://www.nike.com/kr/" target="_blank" rel="noopener">VIEW SITE ↗</a>
+            <div class="career-tags"><span>CDP</span><span>Size Guide</span><span>FITTIP</span><span>PWH</span><span>Journal</span><span>Member Days</span></div>
+          </div>
+        </article>
+
+        <article class="career-item" data-aos="fade-up">
+          <div class="career-period">2022.09 ~ 2023.10</div>
+          <div><h3 class="career-company">이니스프리</h3><p class="career-type">웹퍼블리싱</p></div>
+          <div class="career-content">
+            <span class="career-highlight">입점몰</span>
+            <p class="career-desc">온라인 마켓플레이스에 입점한 이니스프리 제품을 위해, 사용자가 제품을 클릭하면 상세 이미지가 팝업으로 뜨는 딜 페이지 작업을 수행하였습니다.</p>
+            <a class="career-site-link" href="#">VIEW SITE ↗</a>
+            <div class="career-tags"><span>Marketplace</span><span>Deal Page</span><span>Popup UI</span></div>
+          </div>
+        </article>
+
+        <article class="career-item" data-aos="fade-up">
+          <div class="career-period">2022.09 ~ 2023.10</div>
+          <div><h3 class="career-company">이니스프리</h3><p class="career-type">웹퍼블리싱</p></div>
+          <div class="career-content">
+            <span class="career-highlight">자사몰</span>
+            <p class="career-desc">이벤트 및 기획전 페이지를 담당하며, 다양한 이니스프리만의 프로모션에 인터랙티브 기능을 적용하여 사용자 참여를 유도하고, 다양한 디바이스에서 원활한 이용이 가능하도록 페이지를 최적화하였습니다.</p>
+            <a class="career-site-link" href="https://www.innisfree.com/kr/ko/ca/event" target="_blank" rel="noopener">VIEW SITE ↗</a>
+            <div class="career-tags"><span>Event Page</span><span>Promotion</span><span>Interaction</span><span>Responsive</span></div>
+          </div>
+        </article>
+
+        <article class="career-item" data-aos="fade-up">
+          <div class="career-period">2024.11 ~ 2025.03</div>
+          <div><h3 class="career-company">LG U+</h3><p class="career-type">웹퍼블리싱</p></div>
+          <div class="career-content">
+            <span class="career-highlight">유독 플랫폼 SI 프로젝트</span>
+            <p class="career-desc">LG U+의 SI 프로젝트에서 웹 퍼블리싱을 담당하며, Vue.js를 활용하여 페이지 구현을 진행하였습니다. 프로젝트 팀과 긴밀히 협업하여 요구 사항을 반영하고, 디자인 및 개발팀과 협력하여 효율적인 코드 작성을 통해 프로젝트 목표를 달성하였습니다.</p>
+            <a class="career-site-link" href="https://www.lguplus.com/pogg/main?p=3" target="_blank" rel="noopener">VIEW SITE ↗</a>
+            <div class="career-tags"><span>Vue.js</span><span>SI Project</span><span>Web Publishing</span><span>Collaboration</span></div>
+          </div>
+        </article>
+
+        <article class="career-item" data-aos="fade-up">
+          <div class="career-period">2023.10 ~ 2024.07<br>2025.03 ~ 2026.01</div>
+          <div><h3 class="career-company">올리브영</h3><p class="career-type">웹퍼블리싱</p></div>
+          <div class="career-content">
+            <span class="career-highlight">현재 진행중</span>
+            <p class="career-desc">올리브영 매거진과 이벤트 페이지의 퍼블리싱 및 등록을 담당하며, 브랜드 콘텐츠를 인터랙션 요소를 적용하여 효과적으로 구성하고, 관련 커뮤니케이션과 이슈 해결을 통해 프로젝트 진행을 원활하게 수행하였습니다.</p>
+            <a class="career-site-link" href="#">VIEW SITE ↗</a>
+            <div class="career-tags"><span>Magazine</span><span>Event Page</span><span>Publishing</span><span>Interaction</span><span>Content Registration</span><span>Issue Solving</span></div>
+          </div>
+        </article>
+
+      </div>
+
+    </section>
+
+    <section id="work">
+      <h2 class="section-title" data-aos="fade-up">SKILLS</h2>
+      <p class="section-sub" data-aos="fade-up" data-aos-delay="100">Experience & Publishing</p>
+
+      <div class="skills-simple" data-aos="fade-up" data-aos-delay="150">
+        <div class="skill-row">
+          <span class="skill-number">01</span>
+          <div>
+            <h3>Web Publishing</h3>
+            <p>HTML5, CSS3를 기반으로 시맨틱 마크업과 다양한 웹 페이지를 제작합니다.</p>
+          </div>
+        </div>
+
+        <div class="skill-row">
+          <span class="skill-number">02</span>
+          <div>
+            <h3>Responsive Web</h3>
+            <p>PC, Tablet, Mobile 환경을 고려해 다양한 디바이스에서 자연스럽게 보이는 레이아웃을 구현합니다.</p>
+          </div>
+        </div>
+
+        <div class="skill-row">
+          <span class="skill-number">03</span>
+          <div>
+            <h3>UI Interaction</h3>
+            <p>JavaScript, jQuery, Swiper, AOS 등을 활용해 스크롤과 슬라이드 기반의 인터랙션을 구현합니다.</p>
+          </div>
+        </div>
+
+        <div class="skill-row">
+          <span class="skill-number">04</span>
+          <div>
+            <h3>Collaboration</h3>
+            <p>기획, 디자인, 개발 과정에서 요구사항을 확인하고 콘텐츠 등록 및 이슈 대응까지 유연하게 협업합니다.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    
+
+    <section id="project">
+      <h2 class="section-title" data-aos="fade-up">PROJECTS</h2>
+      <p class="section-sub" data-aos="fade-up" data-aos-delay="100">Personal Publishing Projects</p>
+
+      <div class="project-list">
+        <a class="project-card featured" href="./beaty/beauty-event.html" data-aos="fade-up">
+          <span class="label">PROJECT 01 · PERSONAL RE-DESIGN</span>
+          <h3>Interactive Mobile Event</h3>
+          <p>가상의 뷰티 브랜드를 주제로 제작한 모바일 이벤트 페이지. 스크롤·가로 전환·슬라이더·마퀴·줌 인터랙션을 중심으로 재구성했습니다.</p>
+          <div class="project-tags"><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Swiper</span><span>AOS</span></div>
+          <span class="view">VIEW PROJECT ↗</span>
+        </a>
+
+        <a class="project-card" href="./smoothie-king/smoothie-king.html" data-aos="fade-up" data-aos-delay="100">
+          <span class="label">PROJECT 02 · PERSONAL RE-DESIGN</span>
+          <h3>Smoothie King Redesign</h3>
+          <p>스무디킹 메인페이지를 새롭게 구성한 반응형 웹 리디자인 프로젝트. 브랜드 비주얼과 메뉴, 프로모션 콘텐츠에 다양한 인터랙션을 적용했습니다.</p>
+          <div class="project-tags"><span>Responsive</span><span>HTML5</span><span>CSS3</span><span>JavaScript</span><span>Interaction</span></div>
+          <span class="view">VIEW PROJECT ↗</span>
+        </a>
+
+        <article class="project-card" href="./nateon/nateon-redesign.html" data-aos="fade-up" data-aos-delay="200">
+          <span class="label">PROJECT 03</span>
+          <h3>Responsive Web</h3>
+          <p>PC, Tablet, Mobile 환경을 고려해 동일한 콘텐츠를 자연스럽게 전환하는 반응형 웹 프로젝트.</p>
+          <div class="project-tags"><span>Media Query</span><span>Flex</span><span>Grid</span></div>
+          <span class="view">COMING SOON</span>
+        </article>
+
+        <article class="project-card" href="./wine/wine-project.html" data-aos="fade-up" data-aos-delay="300">
+          <span class="label">PROJECT 04</span>
+          <h3>UI Interaction</h3>
+          <p>스크롤과 hover를 중심으로 콘텐츠가 살아 움직이는 듯한 UI 인터랙션을 실험한 프로젝트.</p>
+          <div class="project-tags"><span>JavaScript</span><span>Animation</span><span>Interaction</span></div>
+          <span class="view">COMING SOON</span>
+        </article>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div>
+        <h2 class="section-title" data-aos="fade-up">CONTACT</h2>
+        <p class="section-sub" data-aos="fade-up" data-aos-delay="100">
+          함께 일할 수 있는 기회를 기다리고 있습니다.<br>
+          궁금하신 부분은 이메일로 문의해주세요.
+        </p>
+        <div class="contact-mail" data-aos="fade-up" data-aos-delay="200">rubi4u@naver.com</div>
+        <p class="contact-info" data-aos="fade-up" data-aos-delay="300">
+          Web Publisher · HTML · CSS · JavaScript<br>
+          Responsive Web · UI Interaction · Mobile Event
+        </p>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
+  <script>
+    AOS.init({
+      duration:800,
+      easing:'ease-out-cubic',
+      offset:100,
+      once:true
+    });
+
+  </script>
+</body>
+</html>
